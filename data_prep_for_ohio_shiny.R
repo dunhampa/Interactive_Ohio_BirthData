@@ -39,7 +39,7 @@ data_prep<-function(){
                   fillColor = ~colorQuantile("Reds",Low.Birth.Count )(Low.Birth.Count),
                   highlightOptions = highlightOptions(color = "white", weight = 2,
                                                       bringToFront = TRUE),
-                  popup = ~as.factor(paste0("<b><font size=\"4\"><center>County: </b>",SingleState$NAME,"</font></center>","<b># Low Birth Weight Births: </b>", prettyNum(SingleState$Low.Birth.Count,big.mark=","),"<br/>","<b># Normal Birth Weight Births: </b>",prettyNum(SingleState$Norm.Birth.Count,big.mark=","))))
+                  popup = ~as.factor(paste0("<b><font size=\"4\"><center>County: </b>",SingleState$NAME,"</font></center>","<b># Low Birth Weight Births: </b>", prettyNum(SingleState$Low.Birth.Count,big.mark=","),"<br/>","<b># Normal Birth Weight Births: </b>",prettyNum(SingleState$`Normal birth weight (2500g+)`,big.mark=","))))
     
     map<-map %>% setView(-82.1, 39.9,  zoom = 7)
   

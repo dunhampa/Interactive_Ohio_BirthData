@@ -22,17 +22,7 @@ data_prep<-function(){
   
   SingleState <- subset(states, states$STATENAME %in% c("Ohio"))
   
-  SumState<-birthdata2 %>%
-    group_by(CountyCountyName,YearBirthYearDesc, LowBirthWeightIndLowBirthWeightIndDesc) %>%
-    summarise(BirthTotal=sum(as.numeric(BirthCount)))
-     
-  
-  SumState<-new %>%
-    group_by(CountyCountyName,YearBirthYearDesc, LowBirthWeightIndLowBirthWeightIndDesc) %>%
-    summarise(BirthTotal=sum(as.numeric(converted)))
-  
-  
-  SumState<-birthdata2 %>%
+   SumState<-birthdata2 %>%
     group_by(CountyCountyName,YearBirthYearDesc, LowBirthWeightIndLowBirthWeightIndDesc) %>%
     summarise(BirthTotal=sum(as.numeric(replace_na(as.numeric(BirthCount),0))))
   
@@ -101,7 +91,11 @@ server <- function(input, output) {
   
   observeEvent(input$Obser_Choice, { # update the location selectInput on map clicks
     print(input$Obser_Choice)
-  
+    
+    
+    
+    
+    
   }) 
   
   
