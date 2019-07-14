@@ -117,7 +117,7 @@ plot<-ggplot(data, aes(x=MaternalAge, y=BirthCount, fill=BirthWeight))+
   theme(axis.title.y  = element_text(color = "black", size = 16, face = "bold", vjust=.5,margin = unit(c(3, 3, 3, 3), "mm"))) + 
   theme(axis.text.y  = element_text(color = "black", size = 12, vjust=.5,margin = unit(c(2, 2, 2, 2), "mm"))) + 
   theme(panel.background = element_rect(fill = "#D7EDF9",size = 1, linetype = "solid")) +
-  labs(title="Cheat Die Prob. By Consecutive Rolls" , x= "Consecutive Rolls", y="Probability Cheat Die Selected" ) 
+  labs(title="County Birth Data" , x= "Maternal Age", y="Birth Count" ) 
 
 plot
 
