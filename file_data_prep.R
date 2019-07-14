@@ -117,10 +117,47 @@ plot<-ggplot(data, aes(x=MaternalAge, y=BirthCount, fill=BirthWeight))+
   theme(axis.title.y  = element_text(color = "black", size = 16, face = "bold", vjust=.5,margin = unit(c(3, 3, 3, 3), "mm"))) + 
   theme(axis.text.y  = element_text(color = "black", size = 12, vjust=.5,margin = unit(c(2, 2, 2, 2), "mm"))) + 
   theme(panel.background = element_rect(fill = "#D7EDF9",size = 1, linetype = "solid")) +
-  labs(title="County Birth Data" , x= "Maternal Age", y="Birth Count" ) 
+  theme(strip.text.y  = element_text(color = "black", size = 12, face = "bold")) +
+  theme(legend.title =  element_text(color = "black", size = 12, face = "bold")) +
+  labs(title="County Birth Data" , x= "Maternal Age", y="Birth Count", fill = "Birth Weight") 
 
 plot
 
 #ggplot(data, aes(x=BirthAgeGroupAgeGroupDesc, y=as.numeric(replace_na(as.numeric(BirthCount),0)), fill=LowBirthWeightIndLowBirthWeightIndDesc))+
  # geom_bar(stat="identity")+
   #facet_grid(YearBirthYearDesc~.)
+
+
+get_county_plot<-function(birthdata, county){
+  
+  data<-birthdata[birthdata$CountyCountyName==county & birthdata$YearBirthYearDesc %in% c("2014","2015","2016","2017","2018"),]
+  
+  colnames(data)<-c("BirthWeight" ,"MaternalAge", "Year", "County", "BirthCount", "BirthCount_Percent")
+  library(plyr)
+  data$BirthWeight<-revalue(data$BirthWeight, c("Low birth weight (<2500g)"="< 5.5 lbs", "Normal birth weight (2500g+)"="5.5 lbs+"))
+  data$BirthCount[data$BirthCount=="*"]<-0
+  data$BirthCount<-as.numeric(replace_na(as.numeric(data$BirthCount),0))
+  data$MaternalAge<-as.factor(data$MaternalAge)
+  data$MaternalAge<-revalue(data$MaternalAge, c("Less than 15"="< 15", "45 and older"="> 44"))
+  data$MaternalAge<-factor(data$MaternalAge, levels=c("< 15","15 to 17","18 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","> 44"))
+  
+  
+  plot<-ggplot(data, aes(x=MaternalAge, y=BirthCount, fill=BirthWeight))+
+    geom_bar(stat="identity")+
+    facet_grid(Year~.) +
+    theme(plot.title = element_text(color = "black", size = 18, face = "bold", hjust=.5,margin = unit(c(5, 5, 5, 5), "mm"))) +
+    theme(axis.title.x  = element_text(color = "black", size = 16, face = "bold",margin = unit(c(5, 5, 5, 5), "mm"))) +
+    theme(axis.title.y  = element_text(color = "black", size = 16, face = "bold", vjust=.5,margin = unit(c(3, 3, 3, 3), "mm"))) + 
+    theme(axis.text.y  = element_text(color = "black", size = 12, vjust=.5,margin = unit(c(2, 2, 2, 2), "mm"))) + 
+    theme(panel.background = element_rect(fill = "#D7EDF9",size = 1, linetype = "solid")) +
+    theme(strip.text.y  = element_text(color = "black", size = 12, face = "bold")) +
+    theme(legend.title =  element_text(color = "black", size = 12, face = "bold")) +
+    labs(title="County Birth Data" , x= "Maternal Age", y="Birth Count", fill = "Birth Weight") 
+  
+  plot
+  
+  
+}
+
+
+
