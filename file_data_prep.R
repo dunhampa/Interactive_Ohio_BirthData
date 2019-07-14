@@ -8,6 +8,17 @@
 #data from dataware
 #http://publicapps.odh.ohio.gov/EDW/DataBrowser/Browse/OhioLiveBirths
 
+############
+
+library(leaflet)
+library(rgdal)
+library(magrittr)
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+
+
+
 birthdata<-read.csv("Report_Data_2019_07July_08.csv", stringsAsFactors = FALSE)
 
 states <- readOGR("county/cb_2015_us_county_20m.shp",
@@ -84,6 +95,32 @@ get_ByMaternalAge_map<-function(){
 }
 
 
+library(ggplot2)
+
+#data<-birthdata[birthdata$CountyCountyName=="Adams" & birthdata$YearBirthYearDesc=="2006",]
+data<-birthdata[birthdata$CountyCountyName=="Medina" & birthdata$YearBirthYearDesc %in% c("2014","2015","2016","2017","2018"),]
+
+colnames(data)<-c("BirthWeight" ,"MaternalAge", "Year", "County", "BirthCount", "BirthCount_Percent")
+library(plyr)
+data$BirthWeight<-revalue(data$BirthWeight, c("Low birth weight (<2500g)"="< 5.5 lbs", "Normal birth weight (2500g+)"="5.5 lbs+"))
+data$BirthCount<-as.numeric(replace_na(as.numeric(data$BirthCount),0))
+data$MaternalAge<-as.factor(data$MaternalAge)
+data$MaternalAge<-revalue(data$MaternalAge, c("Less than 15"="< 15", "45 and older"="> 44"))
+data$MaternalAge<-factor(data$MaternalAge, levels=c("< 15","15 to 17","18 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","> 44"))
 
 
+plot<-ggplot(data, aes(x=MaternalAge, y=BirthCount, fill=BirthWeight))+
+  geom_bar(stat="identity")+
+  facet_grid(Year~.) +
+  theme(plot.title = element_text(color = "black", size = 18, face = "bold", hjust=.5,margin = unit(c(5, 5, 5, 5), "mm"))) +
+  theme(axis.title.x  = element_text(color = "black", size = 16, face = "bold",margin = unit(c(5, 5, 5, 5), "mm"))) +
+  theme(axis.title.y  = element_text(color = "black", size = 16, face = "bold", vjust=.5,margin = unit(c(3, 3, 3, 3), "mm"))) + 
+  theme(axis.text.y  = element_text(color = "black", size = 12, vjust=.5,margin = unit(c(2, 2, 2, 2), "mm"))) + 
+  theme(panel.background = element_rect(fill = "#D7EDF9",size = 1, linetype = "solid")) +
+  labs(title="Cheat Die Prob. By Consecutive Rolls" , x= "Consecutive Rolls", y="Probability Cheat Die Selected" ) 
 
+plot
+
+#ggplot(data, aes(x=BirthAgeGroupAgeGroupDesc, y=as.numeric(replace_na(as.numeric(BirthCount),0)), fill=LowBirthWeightIndLowBirthWeightIndDesc))+
+ # geom_bar(stat="identity")+
+  #facet_grid(YearBirthYearDesc~.)
