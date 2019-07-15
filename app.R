@@ -54,14 +54,14 @@ get_county_plot<-function(birthdata, county){
     ),
     dashboardBody(
      
-      tags$head(
-        tags$style(HTML("
-          .content-wrapper {
-            background-color: white !important;
-          }
+     # tags$head(
+      #  tags$style(HTML("
+       #   .content-wrapper {
+        #    background-color: white !important;
+         # }
           
-        "))
-      ),
+      #  "))
+      #),
       
       
       
@@ -78,20 +78,24 @@ get_county_plot<-function(birthdata, county){
                   #valueBoxOutput("vbox")),
                 
                 fluidRow(
-                 leafletOutput("myMap"),   
+                 column(2),
+                 column(8,
+                 box(leafletOutput("myMap"), width="100%")),  
+                 column(2),
                       tags$head(
                         tags$style(HTML(".leaflet-container { background: #fff; }"))
                       ),
                       tags$style(type = "text/css", "#myMap{ height: 500px !important;; }")
                       
                       ),
+                fluidRow(),
                 
                 fluidRow(
                   
                   title = "",
                   column(2),
                   column(8,
-                  plotOutput("county_plot", height=1000)),
+                  box(plotOutput("county_plot", height=1000),width="100%")),
                   column(2)
                 )
         ),
