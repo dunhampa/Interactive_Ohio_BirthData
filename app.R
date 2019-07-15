@@ -70,22 +70,37 @@ get_county_plot<-function(birthdata, county){
         tabItem(tabName = "dashboard",
     
                 
-                
-                h1("Click on a county to view that county's birth data"),
-                h3("The county's data will populate underneath the map"),
+                fluidRow(
+                  
+                  column(6,
+                         h1("Click On A County"),
+                         h3("Pop will show birth totals for 2018")
+                         ),
+                  column(6,
+                         h1("Country Birth Data Details"),
+                         h3("Details on Maternal Age and Birth Weight")
+                  )
+                  
+                ),
+               
                 #fluidRow(
   
                   #valueBoxOutput("vbox")),
                 
                 fluidRow(
-                 column(2),
-                 column(8,
-                 box(leafletOutput("myMap"), width="100%")),  
-                 column(2),
-                      tags$head(
+                 #column(1),
+                 column(6,
+                 #box(
+                   leafletOutput("myMap", height=600)
+                     #, width="100%")
+                     ),  
+                 column(6,
+                        box(plotOutput("county_plot", height=600), width="100%")),  
+                 #column(1),
+                 tags$head(
                         tags$style(HTML(".leaflet-container { background: #fff; }"))
-                      ),
-                      tags$style(type = "text/css", "#myMap{ height: 500px !important;; }")
+                      )#,
+                      #tags$style(type = "text/css", "#myMap{ height: 500px !important;; }")
                       
                       ),
                 fluidRow(),
@@ -94,8 +109,8 @@ get_county_plot<-function(birthdata, county){
                   
                   title = "",
                   column(2),
-                  column(8,
-                  box(plotOutput("county_plot", height=1000),width="100%")),
+                  #column(8,
+                  #box(plotOutput("county_plot", height=1000),width="100%")),
                   column(2)
                 )
         ),
@@ -162,7 +177,8 @@ get_county_plot<-function(birthdata, county){
       #gets county specifc ggplot for county clicked
       get_county_plot<-function(birthdata, county){
         
-        data<-birthdata[birthdata$CountyCountyName==county & birthdata$YearBirthYearDesc %in% c("2014","2015","2016","2017","2018"),]
+        #data<-birthdata[birthdata$CountyCountyName==county & birthdata$YearBirthYearDesc %in% c("2014","2015","2016","2017","2018"),]
+        data<-birthdata[birthdata$CountyCountyName==county & birthdata$YearBirthYearDesc %in% c("2018"),]
         
         colnames(data)<-c("BirthWeight" ,"MaternalAge", "Year", "County", "BirthCount", "BirthCount_Percent")
         
