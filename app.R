@@ -49,6 +49,8 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
 
 
   ui <- dashboardPage(
+    
+    
     dashboardHeader(title = "Ohio Birth Data Exploration"),
     
     dashboardSidebar(
@@ -83,17 +85,19 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
                 fluidRow(
              
                  column(6,
-                 
+                   #tags$style(type = "text/css", "#myMap {height: 100vh ;width: 150vh; }"),
+                   #leafletOutput("myMap", height=600)
                    leafletOutput("myMap", height=600)
                    #box(leafletOutput("myMap"), height="125%", width="100%")
           
                      ),  
-                 column(6,
+                 column(6 ,
+                        #tags$style(type = "text/css", "#myMap{ height: 500px !important;; }"),
                         box(plotOutput("county_plot", height=600), width="100%")),
                         #box(plotOutput("county_plot"), height="100%")),  
                  
                  tags$head(
-                        tags$style(HTML(".leaflet-container { background: #fff; }"))
+                        tags$style(HTML(".leaflet-container { background: #fff; height: 100%; width: 100%; }"))
                       )
                       ),
                 fluidRow()
