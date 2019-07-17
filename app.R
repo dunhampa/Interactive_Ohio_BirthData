@@ -8,7 +8,7 @@ library(shinydashboard)
 library(shinyWidgets)
 
 
-birthdata<-read.csv("Report_Data_2019_07July_08.csv", stringsAsFactors = FALSE)
+birthdata<-read.csv(paste0(getwd(),"/data_prep/Report_Data_2019_07July_08.csv"), stringsAsFactors = FALSE)
 
 get_county_plot<-function(birthdata, county, trend=FALSE){
   
@@ -180,7 +180,7 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
       
       #gets county specifc ggplot for county clicked
       print(input$myMap_shape_click$id[1])
-      birthdata<-read.csv("Report_Data_2019_07July_08.csv", stringsAsFactors = FALSE)
+      #birthdata<-read.csv("Report_Data_2019_07July_08.csv", stringsAsFactors = FALSE)
       output$county_plot<-renderPlot({ get_county_plot(birthdata,input$myMap_shape_click$id[1])})
       output$county_trend_plot<-renderPlot({ get_county_plot(birthdata,input$myMap_shape_click$id[1], TRUE)})
       

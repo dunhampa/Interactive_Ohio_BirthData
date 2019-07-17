@@ -1,3 +1,5 @@
+#run data_prep() when you ready
+
 data_prep<-function(){
   
   #data prep for shiny app
@@ -10,7 +12,7 @@ data_prep<-function(){
   library(jsonlite)
   
   
-  #setwd("../shiny_ohio_dataprep")
+  setwd(paste0(getwd(),"/data_prep"))
   
   
   birthdata<-read.csv("ReportOutput-BirthWeight.csv", stringsAsFactors = FALSE)
@@ -43,10 +45,7 @@ data_prep<-function(){
     
     map<-map %>% setView(-82.1, 39.9,  zoom = 7)
   
-    #setwd("../shiny_ohio")
+    setwd("../")
     saveRDS(map, file="map.rds")
-  
-  
-  
   
 }
