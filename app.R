@@ -5,7 +5,7 @@ library(ggplot2)
 library(tidyr)
 library(plyr)
 library(shinydashboard)
-library(shinyWidgets)
+#library(shinyWidgets)
 
 
 birthdata<-read.csv(paste0(getwd(),"/data_prep/Report_Data_2019_07July_08.csv"), stringsAsFactors = FALSE)
