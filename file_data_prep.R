@@ -44,7 +44,7 @@ get_ByBirth_map<-function(){
   
   ByWeightMapData<-sp::merge(x=SingleState, y=CurrentByBirthWeight, by.x="NAME", by.y="CountyCountyName", by=x)
   
-  ByWeightMap<-leaflet(ByWeightMapData,options = leafletOptions(zoomControl = FALSE, zoomLevelFixed = TRUE, dragging=FALSE, minZoom = 7, maxZoom = 7) ) %>%
+  ByWeightMap<-leaflet(ByWeightMapData,options = leafletOptions(zoomControl = TRUE, zoomLevelFixed = FALSE, dragging=FALSE, minZoom = 3, maxZoom = 9) ) %>%
     
     addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
                 opacity = 1.0, fillOpacity = 0.5,

@@ -2,6 +2,7 @@
 library(shiny)
 library(leaflet)
 library(ggplot2)
+library(tidyr)
 library(plyr)
 library(shinydashboard)
 library(shinyWidgets)
@@ -67,17 +68,16 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
       tabItems(
         # First tab content
         tabItem(tabName = "dashboard",
-    
+                
+              
                 
                 fluidRow(
                   
-                  column(6,
-                         h1("Click On A County"),
-                         h3("Pop will show birth totals for 2018")
+                  column(6
+                        
                          ),
-                  column(6,
-                         h1("Country Birth Data Details"),
-                         h3("Details on Maternal Age and Birth Weight")
+                  column(6
+                        
                   )
                   
                 ),
@@ -85,6 +85,8 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
                 fluidRow(
              
                  column(6,
+                        h1("Click On A County"),
+                        h3("Pop will show birth totals for 2018"),
                    #tags$style(type = "text/css", "#myMap {height: 100vh ;width: 150vh; }"),
                    #leafletOutput("myMap", height=600)
                    leafletOutput("myMap", height=600)
@@ -92,6 +94,8 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
           
                      ),  
                  column(6 ,
+                        h1("Country Birth Data Details"),
+                        h3("Details on Maternal Age and Birth Weight"),
                         #tags$style(type = "text/css", "#myMap{ height: 500px !important;; }"),
                         box(plotOutput("county_plot", height=600), width="100%")),
                         #box(plotOutput("county_plot"), height="100%")),  
@@ -105,7 +109,7 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
         ),
         tabItem(tabName = "trend",
                 fluidRow(
-                  h2("Widgets tab content"),
+                  h2("County Birth Data Trend"),
                   column(2),
                   column(8,box(plotOutput("county_trend_plot", height=600), width=600)),
                   #column(8,box(plotOutput("county_trend_plot", height="auto"), height="100%")),
@@ -115,7 +119,8 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
         ),
         # Second tab content
         tabItem(tabName = "background",
-                h2("Widgets tab content")
+                h2("Background"),
+                includeHTML("background.html")
         )
       )
       
@@ -168,12 +173,13 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
       
     })
     
-    
+    output$county_plot<-renderPlot({ get_county_plot(birthdata,"Franklin")})
+    output$county_trend_plot<-renderPlot({ get_county_plot(birthdata,"Franklin", TRUE)})
     
     observeEvent(input$myMap_shape_click, { # update the location selectInput on map clicks
       
       #gets county specifc ggplot for county clicked
-
+      print(input$myMap_shape_click$id[1])
       birthdata<-read.csv("Report_Data_2019_07July_08.csv", stringsAsFactors = FALSE)
       output$county_plot<-renderPlot({ get_county_plot(birthdata,input$myMap_shape_click$id[1])})
       output$county_trend_plot<-renderPlot({ get_county_plot(birthdata,input$myMap_shape_click$id[1], TRUE)})
