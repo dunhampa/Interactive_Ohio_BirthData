@@ -7,7 +7,7 @@ library(plyr)
 library(shinydashboard)
 #library(shinyWidgets)
 
-
+#setwd()
 birthdata<-read.csv(paste0(getwd(),"/data_prep/Report_Data_2019_07July_08.csv"), stringsAsFactors = FALSE)
 
 get_county_plot<-function(birthdata, county, trend=FALSE){
@@ -51,8 +51,11 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
 
   ui <- dashboardPage(
     
+   
     
-    dashboardHeader(title = "Ohio Birth Data Exploration"),
+    dashboardHeader(title = "Ohio Birth Data Exploration", 
+                    tags$li(class = "dropdown", tags$a(HTML("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\" />")))
+                    ),
     
     dashboardSidebar(
       sidebarMenu(
