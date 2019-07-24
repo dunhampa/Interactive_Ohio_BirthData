@@ -89,7 +89,7 @@ get_county_plot<-function(birthdata, county, trend=FALSE){
              
                  column(6,
                         h1("Click On A County"),
-                        h3("Pop will show birth totals for 2018"),
+                        h3("Popup will show birth totals for 2018"),
                    #tags$style(type = "text/css", "#myMap {height: 100vh ;width: 150vh; }"),
                    #leafletOutput("myMap", height=600)
                    leafletOutput("myMap", height=600)
